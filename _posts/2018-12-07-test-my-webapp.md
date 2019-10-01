@@ -192,7 +192,7 @@ B. 使用CAS将首节点的waitStatus置为0
 
 C. 唤醒首节点的有效的后继节点（因为某些节点为CANCELLED状态）   
 
-```Java
+```java
 
 public final boolean release(int arg) {
     if (tryRelease(arg)) {
@@ -234,7 +234,6 @@ private void unparkSuccessor(Node node) {
         //唤醒真实的同步队列的下一个节点
         LockSupport.unpark(s.thread);
 }
-
 ```
 
 
