@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "CentOS7定时任务详解"
+title:  "hahaha"
 categories: linux
 tags:  centos7 crontab linux 工具软件  
 author: SnakeSon
