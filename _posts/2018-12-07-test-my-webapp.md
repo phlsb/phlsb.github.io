@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "JUC源码详解一：语言级锁和同步组件实现的核心AQS"
-categories: yuanma
+categories: 源码
 tags:  hexo JavaScript
 author: 彭浩
 ---
