@@ -2,7 +2,7 @@
 layout: post
 title:  "MarkDown的一些使用技巧"
 categories: 工具
-tags:  hexo JavaScript
+tags:  markdown
 author: 彭浩
 ---
 

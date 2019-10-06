@@ -2,7 +2,7 @@
 layout: post
 title:  "JUC源码详解一：语言级锁和同步组件实现的核心AQS"
 categories: 源码
-tags:  hexo JavaScript
+tags:  JUC
 author: 彭浩
 ---
 
