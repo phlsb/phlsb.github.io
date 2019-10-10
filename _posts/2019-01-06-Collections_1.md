@@ -65,7 +65,7 @@ author: 彭浩
 
 （2）操作的特点
 
-```Java
+```java
 A. 左旋，代码如下（手写）
 private void rotateLeft(Entry<K, V> p){
     if(p != null){
@@ -341,7 +341,7 @@ private void fixAfterDeletion(Entry<K, V> x){
 
 （2）不同点在于比较键值的大小，要么使用自然顺序，要么使用自定义的顺序比较器，定义了当有自定义的Comparator时，调用自定义的key的compare方法来进行比较，而若没有自定义的Comparator，则将key强转为实现Comparable接口的对象，然后调用compareTo方法进行key值的比较
 
-```Java
+```java
 final Entry<K,V> getEntry(Object key) {
     // Offload comparator-based version for sake of performance
     //对于自定义的comparator，将使用自定义的Comparator接口的compare方法来比较两个节点的达到，里面仅仅比较时采用的方法不同而已
@@ -372,7 +372,7 @@ final Entry<K,V> getEntry(Object key) {
 （1）使用getEntry一样的逻辑先查找是否有对应key值相同的节点，若存在，直接调用setValue改变值即可，其中依然分为自然顺序的key值比较与自定义比较器顺序key的比较，同时在比较过程中记录一个parent值用于在找不到key相等对象需要后续插入的情况  
 （2）若未找到key值相同的节点，则插入红黑树的尾部，根据com设置parent节点的引用，随后调用fixAfterInsertion方法调整红黑树的结构
 
-```Java
+```java
 public V put(K key, V value) {
     //空判断，当树为空时，直接添加就好
     Entry<K,V> t = root;
@@ -440,7 +440,7 @@ public V put(K key, V value) {
 
 （2）删除情况二：删除的节点只有一颗子树或者没有子树，对于只有一颗子树的情况，直接修改相关引用后判断删除节点的颜色为黑色调用fixAfterDeletion调整红黑树结构，入参为删除节点的子节点。对于没有子树的情况，首先判断删除节点颜色为黑色调用fixAfterDeletion调整红黑树结构，入参为删除节点（作为虚拟节点，因为java中null代表空值，不能表示一个节点，所以复用删除节点作为虚拟的子节点传入），随后再修改相关引用
 
-```Java
+```java
 private void deleteEntry(Entry<K,V> p) {
     modCount++;
     size--;

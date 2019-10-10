@@ -41,7 +41,7 @@ author: 彭浩
 
 特别注意：计算出的hash值也是32位的，而在定位是按位与上了一个数组长度位的，所以即使在同一个桶中，也不一定hash值就想等，所以第一道关卡就是hash值
 
-```Java
+```java
 public V get(Object key) {
     Node<K,V> e;
     return (e = getNode(hash(key), key)) == null ? null : e.value;
@@ -146,7 +146,7 @@ final TreeNode<K,V> find(int h, Object k, Class<?> kc) {
     
     所以说，这个链表与红黑树的中间链表是非常重要的，在扩容中不仅遍历原树节点有用，而且在退化成链表节点或者构造成红黑树都非常重要。
 
-```Java
+```java
 public V put(K key, V value) {
     return putVal(hash(key), key, value, false, true);
 }
@@ -511,7 +511,8 @@ final Node<K,V> untreeify(HashMap<K,V> map) {
 #### remove方法，
 该方法实现桶中节点的删除，实际上调用的是removeNode方法进行核心实现，其实put方法就是一个find方法和一个resize方法及红黑树的调整是核心不同的，多的勉强的不同即链表树型化和树型节点退化（退化发生在扩容）的过程，删除节点同样逃不过put的核心find逻辑，首先走find的逻辑，通过hash值定位桶后，分别针对是链表节点还是树型节点进行find逻辑查找，链表就是遍历使用hash、==、equals判断即可，红黑树就是二叉搜索树的查找按照dir方向值走调用getTreeNode方法，查找到该节点后（似乎若开启了匹配value值，则最后还需要判断是否value相等才能删除），对于链表来说直接修改引用即可，对于红黑树，则调用removeTreeNode来进行搜索到的节点进行删除，该方法的逻辑对应的是TreeMap的红黑树删除操作fixAfterDeletion的实现。这里不再赘述
 
-```Java
+```java
+
 public V remove(Object key) {
     Node<K,V> e;
     return (e = removeNode(hash(key), key, null, false, true)) == null ?
@@ -671,7 +672,7 @@ final void removeTreeNode(HashMap<K,V> map, Node<K,V>[] tab,
     B. 直接调用siftUp函数进行小顶堆结构的调整，默认是节点直接插入到尾部，其中siftUp函数根据是否自定义了比较器分别调用两个相同逻辑仅仅是比较方法调用不同的函数siftUpUsingComparator与siftUpComparable来进行，核心逻辑阐释如下面C步骤
     C. 直接迭代向上进行调整，直到找到比添加节点元素值小的节点停止，在父节点中（父节点计算是(i-1)/2）找到比当前添加的值小的节点即可停止迭代
 
-```Java
+```java
 public boolean offer(E e) {
     //放入元素为null，则抛出空指针异常
     if (e == null)
@@ -740,7 +741,7 @@ private void siftUpComparable(int k, E x) {
         b. 若不是叶子节点，取当前空位节点（初始为删除节点）的两个子节点中的小者，与堆尾节点比较，取其中的小者作为当前空位节点元素，若采用了堆尾节点填补，则可退出循环，而若是子节点中的小者填补当前空位，则空位下移至子节点中小者，迭代继续，直到堆尾节点填补空位或者已经到达叶子节点。
     E. 判断是否是堆尾节点直接填补的删除节点空位，若是，则调用siftUp函数向上调整堆结构，因为可能堆尾节点要比其父节点更小，而在非直接填补删除节点空位的情况，则子节点一定要比堆尾节点小从而防止父节点比子节点大的情况出现。
 
-```Java
+```java
 public boolean remove(Object o) {
     //遍历数组，使用equals方法查找对应位置
     int i = indexOf(o);
