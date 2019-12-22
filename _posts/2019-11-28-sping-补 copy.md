@@ -23,3 +23,8 @@ author: 彭浩
     2. 将spring-aop_main和spring-aspectjs_main两个模块添加AspectJ Facets：
     打开：File--Project Structure--Facets，点击+号，选择AspectJ，选择spring-aop_main。添加完后，同样的操作，将spring-aspectjs_main模块也设置AspectJ。
     3. 再次执行build
+
+  3、spring执行测试出现问题Error:(26, 38) java: 找不到符号
+  符号:   类 InstrumentationSavingAgent
+  位置: 程序包 org.springframework.instrument
+  问题是模块依赖没有导入只要在Project Structure中为该模块加入模块依赖instrument.main即可
