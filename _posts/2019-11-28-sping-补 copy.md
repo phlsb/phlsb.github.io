@@ -13,4 +13,13 @@ author: 彭浩
   该问题可以直接百度搜索，然后复制正确的aop的schema文件即可
 
 （2）报错：Caused by: java.lang.ClassNotFoundException: org.aspectj.weaver.reflect ReflectionWorld$ReflectionWorldException  
-该问题需要导入对应版本的aspectjweaver.jar包，找对应的jar包下载，然后在FILE->Project Structor中引入(+)即可
+该问题正常来说需要导入对应版本的aspectjweaver.jar包，找对应的jar包下载，然后在FILE->Project Structor中引入(+)即可，但是我是采用的gradle构建spring源码阅读环境时并没有加入aspectj的支持和编译配置，所以重新build project会发现错误的来源，此时参考如下博客进行添加https://www.youyoustudio.com/2019/03/21/109.html，大致步骤是：  
+（1）下载aspectj的jar包，直接官网https://www.eclipse.org/aspectj/，  
+（2）点击安装，记下安装路径，然后将xxx\lib\aspectj.jar添加到CLASSPATH环境变量中（jdk环境会的配置），以及将xxx\bin添加到PATH环境中，在cmd中使用ajc判断是否安装成功  
+（3）在idea中project structer中进行如下步骤
+
+    1. 将Idea的编译器设置为Ajc：
+    打开：IDEA--Preferences--Build,Execution,Deployment--Compiler--JavaCompiler,将Use compiler设置为Ajc，将Path to Ajc compiler设置为AspectJ安装目录下的lib文件夹中的aspectjtools.jar文件，同时，可以勾选Delegate to Javac选项，它能够只编译AspectJ的Facets项目，而其他普通项目还是交由Javac来编译。
+    2. 将spring-aop_main和spring-aspectjs_main两个模块添加AspectJ Facets：
+    打开：File--Project Structure--Facets，点击+号，选择AspectJ，选择spring-aop_main。添加完后，同样的操作，将spring-aspectjs_main模块也设置AspectJ。
+    3. 再次执行build
