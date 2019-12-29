@@ -30,3 +30,35 @@ author: 彭浩
   符号:   类 InstrumentationSavingAgent
   位置: 程序包 org.springframework.instrument
   问题是模块依赖没有导入只要在Project Structure中为该模块加入模块依赖instrument.main即可
+
+  4、spring整合mybatis时出现Caused by: java.io.IOException: Could not find resource user.mapper.xml 原因是idea不会编译src目录下的xml文件。可行的解决方案是通过
+
+      (1) 我们必须在配置文件中指定mapper.xml文件的位置，例如在springboot项目中，在application.properties中增加：
+      mybatis.mapper-locations=classpath:mapper/*.xml
+      如果是普通的ssm项目，则这样配置：
+```xml
+<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="druidDataSource"/>
+    <property name="configLocation" value="classpath:mybatis-config.xml"/>
+    <!-- 配置mapper文件的位置 -->
+    <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+</bean>
+```
+    (2)第二种方法：配置maven的pom文件配置，在pom文件中找到<build>节点，添加下列代码：
+```xml
+<build>  
+  <resources>  
+    <!-- mapper.xml文件在java目录下 -->
+    <resource>  
+      <directory>src/main/java</directory>  
+        <includes>  
+          <include>**/*.xml</include>  
+        </includes>  
+    </resource>  
+    <!-- mapper.xml文件在resources目录下-->
+    <--<resource>
+        <directory>src/main/resources</directory> 
+    </resource>-->
+  </resources>  
+</build>
+```
