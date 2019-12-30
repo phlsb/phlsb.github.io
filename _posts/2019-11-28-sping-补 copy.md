@@ -62,3 +62,7 @@ author: 彭浩
   </resources>  
 </build>
 ```
+
+5、报错Unable to proxy interface-implementing method  
+ClassCastException: xxx$$EnhancerBySpringCGLIB$$f539e44c cannot be cast to xxx  
+问题根源在于在代理dao层时，因为我们继承了SqlSessionDaoSupport，这个东西里面方法时final的，不能用cglib来代理，所以警告。
