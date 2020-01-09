@@ -10,6 +10,17 @@ author: 彭浩
  Vagrant : http://www.vagrantup.com/  
  box：http://www.vagrantbox.es/  
 
+# vagrant up执行时出现“未安装VirtualBox”但实际上已安装的情况解决方式
+* 原因是Vagrant需要使用VBoxManager，会在path中扫描VirtualBox的文件目录，详情如下
+```
+Vagrant (or VBoxManage.exe, for that matter) does not need to be in your PATH environment variable. The Virtual Box installer automatically sets the VBOX_INSTALL_PATH or VBOX_MSI_INSTALL_PATH environment variable which is what Vagrant uses to look it up, but Vagrant cannot run it unless it's elevated.
+```
+所以解决方式为
+```
+将
+D:\HashiCorp\Vagrant\embedded\gems\2.2.4\gems\vagrant-2.2.4\plugins\providers\virtualbox\driver
+中base.rb修改，将所有VBOX_INSTALL_PATH都替换为VBOX_MSI_INSTALL_PATH即可
+```
 
 # win10家庭版如何安装Hyper-v
 * 注意是win10家庭版，因为win10家庭版是没有内置Hyper-v的，需要自己去安装
